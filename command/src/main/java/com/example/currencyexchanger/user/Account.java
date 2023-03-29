@@ -1,4 +1,4 @@
-package user;
+package com.example.currencyexchanger.user;
 
 import java.math.BigDecimal;
 

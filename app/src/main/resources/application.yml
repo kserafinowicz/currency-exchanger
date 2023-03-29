@@ -1,0 +1,17 @@
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: 'org.h2.Driver'
+    username: sa
+    password: ''
+  jpa.database-platform: 'org.hibernate.dialect.H2Dialect'
+  h2.console.enabled: true
+
+exchanger:
+  rate:
+    api:
+      url: "https://api.nbp.pl/api/exchangerates/rates/c"
