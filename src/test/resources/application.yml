@@ -4,7 +4,7 @@ springdoc:
     enabled: true
 spring:
   datasource:
-    url: jdbc:h2:mem:exchangedb
+    url: jdbc:h2:mem:testdb
     driverClassName: 'org.h2.Driver'
     username: sa
     password: ''
@@ -18,9 +18,9 @@ exchanger:
     currency: 'PLN'
   currency:
     update:
-      cron: "0 * * * * *"
+      cron: "0 0 0 25 12 ?"
   imported:
     currencies: 'USD'
   rate:
     api:
-      url: "https://api.nbp.pl/api/exchangerates/rates/c"
+      url: "http://localhost:8081/api/exchangerates/rates/c"

@@ -23,12 +23,13 @@ dependencies {
     implementation project(':command')
     implementation project(':query')
     implementation 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
     runtimeOnly 'com.h2database:h2:2.1.214'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.5'
+    testImplementation "com.github.tomakehurst:wiremock-standalone:3.0.0-beta-2"
 
     annotationProcessor "org.projectlombok:lombok:1.18.26"
-
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
 }
 
 description = 'Currency exchanger project'
