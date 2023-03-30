@@ -7,6 +7,7 @@ import com.currencyexchanger.command.commands.Exchange;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,8 @@ class UserAccountExchangeTest {
         "USD",
         BigDecimal.valueOf(100L),
         currencyExchange,
-        Currency.getInstance("PLN")
+        Currency.getInstance("PLN"),
+        Set.of("PLN", "USD")
     );
 
     UserAccount account = new UserAccount(accountId, "John", "Smith",
@@ -65,7 +67,8 @@ class UserAccountExchangeTest {
         "PLN",
         BigDecimal.valueOf(100L),
         currencyExchange,
-        Currency.getInstance("PLN")
+        Currency.getInstance("PLN"),
+        Set.of("PLN", "USD")
     );
 
     UserAccount account = new UserAccount(accountId, "John", "Smith",
@@ -101,7 +104,8 @@ class UserAccountExchangeTest {
         "PLN",
         BigDecimal.valueOf(100L),
         currencyExchange,
-        Currency.getInstance("PLN")
+        Currency.getInstance("PLN"),
+        Set.of("PLN", "USD")
     );
 
     UserAccount account = new UserAccount(accountId, "John", "Smith",
@@ -131,7 +135,8 @@ class UserAccountExchangeTest {
         "USD",
         BigDecimal.valueOf(-100L),
         currencyExchange,
-        Currency.getInstance("PLN")
+        Currency.getInstance("PLN"),
+        Set.of("PLN", "USD")
     );
 
     UserAccount account = new UserAccount(accountId, "John", "Smith",
@@ -161,11 +166,74 @@ class UserAccountExchangeTest {
         "USD",
         BigDecimal.valueOf(1000L),
         currencyExchange,
-        Currency.getInstance("PLN")
+        Currency.getInstance("PLN"),
+        Set.of("PLN", "USD")
     );
 
     UserAccount account = new UserAccount(accountId, "John", "Smith",
         Map.of("PLN", BigDecimal.valueOf(10L)));
+
+    // when
+    var result = account.apply(command);
+
+    // then
+    assertTrue(result.isLeft());
+  }
+
+  @Test
+  void shouldReturnErrorWhenCurrenciesAreTheSame() {
+    // given
+    var currencyExchange = new CurrencyExchangeRate(
+        Currency.getInstance("USD"),
+        new BigDecimal("2"),
+        new BigDecimal("4")
+    );
+
+    var accountId = AccountId.fromString(UUID.randomUUID().toString()).get();
+
+    Exchange command = new Exchange(
+        accountId,
+        "PLN",
+        "PLN",
+        BigDecimal.valueOf(10L),
+        currencyExchange,
+        Currency.getInstance("PLN"),
+        Set.of("PLN", "USD")
+    );
+
+    UserAccount account = new UserAccount(accountId, "John", "Smith",
+        Map.of("PLN", BigDecimal.valueOf(100L)));
+
+    // when
+    var result = account.apply(command);
+
+    // then
+    assertTrue(result.isLeft());
+  }
+
+  @Test
+  void shouldReturnErrorWhenCurrenciesNotOnAllowedList() {
+    // given
+    var currencyExchange = new CurrencyExchangeRate(
+        Currency.getInstance("USD"),
+        new BigDecimal("2"),
+        new BigDecimal("4")
+    );
+
+    var accountId = AccountId.fromString(UUID.randomUUID().toString()).get();
+
+    Exchange command = new Exchange(
+        accountId,
+        "PLN",
+        "CHF",
+        BigDecimal.valueOf(10L),
+        currencyExchange,
+        Currency.getInstance("PLN"),
+        Set.of("PLN", "USD")
+    );
+
+    UserAccount account = new UserAccount(accountId, "John", "Smith",
+        Map.of("PLN", BigDecimal.valueOf(100L)));
 
     // when
     var result = account.apply(command);

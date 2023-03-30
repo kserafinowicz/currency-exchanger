@@ -5,6 +5,7 @@ import com.currencyexchanger.command.CurrencyExchangeRate;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Set;
 
 public record Exchange(
         AccountId account,
@@ -12,4 +13,5 @@ public record Exchange(
         String toCurrencyCode,
         BigDecimal amount,
         CurrencyExchangeRate exchangeRate,
-        Currency baseCurrency) {}
+        Currency baseCurrency,
+        Set<String> allowedCurrencies) {}

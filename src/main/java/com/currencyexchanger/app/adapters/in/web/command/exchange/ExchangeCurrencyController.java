@@ -7,6 +7,7 @@ import com.currencyexchanger.command.commands.Exchange;
 import com.currencyexchanger.command.ports.in.PerformCurrencyExchangeUseCase;
 import com.currencyexchanger.command.ports.out.FindExchangeRatePort;
 import java.util.Currency;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +21,16 @@ public class ExchangeCurrencyController {
   private final PerformCurrencyExchangeUseCase performCurrencyExchangeUseCase;
   private final FindExchangeRatePort findExchangeRatePort;
   private final Currency baseCurrency;
+  private final Set<String> allowedCurrencies;
 
   public ExchangeCurrencyController(PerformCurrencyExchangeUseCase performCurrencyExchangeUseCase,
       FindExchangeRatePort findExchangeRatePort,
-      @Value("${exchanger.base.currency}") String baseCurrency) {
+      @Value("${exchanger.base.currency}") String baseCurrency,
+      @Value("${exchanger.allowed.currencies}") Set<String> allowedCurrencies) {
     this.performCurrencyExchangeUseCase = performCurrencyExchangeUseCase;
     this.findExchangeRatePort = findExchangeRatePort;
     this.baseCurrency = Currency.getInstance(baseCurrency);
+    this.allowedCurrencies = allowedCurrencies;
   }
 
   @PostMapping("/exchanges")
@@ -36,7 +40,7 @@ public class ExchangeCurrencyController {
             .fold(
                 error -> ResponseEntity.badRequest().body(error.getResponseMessage()),
                 exchangeRate -> performCurrencyExchangeUseCase.performExchange(
-                        assembleCommand(exchangeDto, exchangeRate, baseCurrency)
+                        assembleCommand(exchangeDto, exchangeRate, baseCurrency, allowedCurrencies)
                     )
                     .fold(
                         error -> ResponseEntity.badRequest().body(error.get().getResponseMessage()),
@@ -46,14 +50,15 @@ public class ExchangeCurrencyController {
   }
 
   private Exchange assembleCommand(ExchangeDto exchangeDto, CurrencyExchangeRate rate,
-      Currency baseCurrency) {
+      Currency baseCurrency, Set<String> allowedCurrencies) {
     return new Exchange(
         AccountId.fromString(exchangeDto.getAccountId()).get(),
         exchangeDto.getFromCurrency(),
         exchangeDto.getToCurrency(),
         exchangeDto.getAmount(),
         rate,
-        baseCurrency
+        baseCurrency,
+        allowedCurrencies
     );
   }
 
