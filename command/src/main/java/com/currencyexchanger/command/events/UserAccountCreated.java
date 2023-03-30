@@ -1,8 +1,12 @@
 package com.currencyexchanger.command.events;
 
 import com.currencyexchanger.command.UserAccount;
+import lombok.AllArgsConstructor;
 
-public record UserAccountCreated(UserAccount event) implements UserAccountEvent<UserAccount> {
+@AllArgsConstructor
+public class UserAccountCreated implements UserAccountEvent<UserAccount> {
+
+  UserAccount event;
 
   @Override
   public UserAccount get() {

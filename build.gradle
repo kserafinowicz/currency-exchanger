@@ -44,10 +44,6 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
 allprojects {
     apply plugin: 'java'
 
@@ -62,6 +58,8 @@ allprojects {
     dependencies {
         implementation 'org.projectlombok:lombok:1.18.26'
         implementation 'io.vavr:vavr:0.10.4'
+
+        testImplementation "org.junit.jupiter:junit-jupiter:5.9.2"
 
         annotationProcessor "org.projectlombok:lombok:1.18.26"
     }
