@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class CurrencyAccountEntity {
 
     @Id
-    String id;
+    String accountId;
 
     @Id
     String currencyCode;

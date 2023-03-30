@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+
 public class UserAccountMapper {
 
     public static UserAccountEntity mapToEntity(UserAccount userAccount) {
@@ -24,7 +25,7 @@ public class UserAccountMapper {
         Set<CurrencyAccountEntity> result = new HashSet<>();
         accounts.keySet().forEach(key -> {
             var entity = new CurrencyAccountEntity();
-            entity.setId(accountId);
+            entity.setAccountId(accountId);
             entity.setCurrencyCode(key);
             entity.setAmount(accounts.get(key));
             result.add(entity);

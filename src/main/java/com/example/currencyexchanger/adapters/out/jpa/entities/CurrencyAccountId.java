@@ -1,14 +1,16 @@
 package com.example.currencyexchanger.adapters.out.jpa.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class CurrencyAccountId implements Serializable {
+@EqualsAndHashCode
+class CurrencyAccountId implements Serializable {
 
-    String clientId;
-    String currency;
+    String accountId;
+    String currencyCode;
 }

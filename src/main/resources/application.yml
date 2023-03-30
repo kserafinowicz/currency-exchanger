@@ -12,6 +12,8 @@ spring:
   h2.console.enabled: true
 
 exchanger:
+  base:
+    currency: 'PLN'
   rate:
     api:
       "single-currency":

@@ -1,5 +1,6 @@
 package com.example.currencyexchanger.adapters.out.jpa.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -18,6 +19,6 @@ public class UserAccountEntity {
     String name;
     String surname;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     Set<CurrencyAccountEntity> accounts;
 }
