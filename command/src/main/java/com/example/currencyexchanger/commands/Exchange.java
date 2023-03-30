@@ -6,6 +6,10 @@ import com.example.currencyexchanger.CurrencyExchangeRate;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-public record Exchange(AccountId account, Currency fromCurrency, Currency toCurrency, BigDecimal amount, CurrencyExchangeRate exchangeRate) {
-
-}
+public record Exchange(
+        AccountId account,
+        String fromCurrencyCode,
+        String toCurrencyCode,
+        BigDecimal amount,
+        CurrencyExchangeRate exchangeRate,
+        Currency baseCurrency) {}

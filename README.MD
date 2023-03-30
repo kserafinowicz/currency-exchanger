@@ -26,5 +26,6 @@ Celem zadania jest przygotowanie aplikacji serwującej API REST, która pozwoli 
 ### Zdarzenia domenowe
 
 - użytkownik założył konto
-- użytkownik wymienił walutę
+- użytkownik kupił walutę
+- użytkownik sprzedał walutę
 - użytkownik pobrał dane o koncie i aktualny stan w PLN i USD
