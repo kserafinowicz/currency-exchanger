@@ -9,8 +9,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
 public class UserAccountMapper {
+
+    private UserAccountMapper() {}
 
     public static UserAccountEntity mapToEntity(UserAccount userAccount) {
         UserAccountEntity entity = new UserAccountEntity();

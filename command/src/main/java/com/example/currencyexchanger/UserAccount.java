@@ -5,24 +5,27 @@ import com.example.currencyexchanger.commands.Exchange;
 import com.example.currencyexchanger.errors.DomainError;
 import com.example.currencyexchanger.events.AmountExchanged;
 import com.example.currencyexchanger.events.UserAccountCreated;
+import com.example.currencyexchanger.validators.CreateUserValidator;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
 public record UserAccount(AccountId accountId, String name, String surname, Map<String, BigDecimal> accounts) {
-    public static Either<? extends Seq<DomainError>, UserAccountCreated> apply(CreateUserAccount command) {
-        return Either.right(new UserAccountCreated(
+    public static Either<Seq<DomainError>, UserAccountCreated> apply(CreateUserAccount command) {
+        return new CreateUserValidator().validate(command).fold(
+            Either::left,
+            result -> Either.right(new UserAccountCreated(
                 new UserAccount(
-                        new AccountId(),
-                        command.name(),
-                        command.surname(),
-                        Map.of(command.baseCurrency().getCurrencyCode(), command.initialBalance())
+                    new AccountId(),
+                    command.name(),
+                    command.surname(),
+                    Map.of(command.baseCurrency().getCurrencyCode(), command.initialBalance())
                 )
-        ));
+            ))
+        );
     }
 
     private AmountExchanged apply(Exchange command) {

@@ -7,4 +7,8 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.0'
+}
+
 description = 'command'

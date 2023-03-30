@@ -26,9 +26,9 @@ public class CreateUserAccountController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Void> createUserAccount(@RequestBody CreateUserAccountDto dto) {
+    public ResponseEntity<String> createUserAccount(@RequestBody CreateUserAccountDto dto) {
         return createUserAccountUseCase.createUserAccount(new CreateUserAccount(dto.getName(), dto.getSurname(), dto.getInitialBalance(), baseCurrency)).fold(
-                error -> ResponseEntity.badRequest().build(),
+                error -> ResponseEntity.badRequest().body(error.get().getResponseMessage()),
                 result -> ResponseEntity.accepted().build()
         );
     }
