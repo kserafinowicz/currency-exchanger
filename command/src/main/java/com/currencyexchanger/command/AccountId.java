@@ -1,7 +1,7 @@
 package com.currencyexchanger.command;
 
 
-import com.currencyexchanger.common.errors.DomainError;
+import com.currencyexchanger.common.errors.Error;
 import io.vavr.control.Either;
 import lombok.Getter;
 
@@ -24,9 +24,9 @@ public class AccountId {
         this.uuid = uuid.toString();
     }
 
-    public static Either<DomainError, AccountId> fromString(String id) {
+    public static Either<Error, AccountId> fromString(String id) {
         return CONSTRAINT.test(id)
                 ? Either.right(new AccountId(UUID.fromString(id)))
-                : Either.left(new DomainError("Identifier is null"));
+                : Either.left(new Error("Identifier is null"));
     }
 }

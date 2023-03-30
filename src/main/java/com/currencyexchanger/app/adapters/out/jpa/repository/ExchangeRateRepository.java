@@ -1,8 +1,12 @@
 package com.currencyexchanger.app.adapters.out.jpa.repository;
 
 import com.currencyexchanger.app.adapters.out.jpa.entities.ExchangeRateEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import io.vavr.control.Option;
+import org.springframework.data.repository.Repository;
 
-public interface ExchangeRateRepository extends JpaRepository<ExchangeRateEntity, String> {
+public interface ExchangeRateRepository extends Repository<ExchangeRateEntity, String> {
 
+  Option<ExchangeRateEntity> findByCurrencyCode(String currencyId);
+
+  void save(ExchangeRateEntity entity);
 }

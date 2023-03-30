@@ -3,11 +3,11 @@ package com.currencyexchanger.common.errors;
 import lombok.Getter;
 
 @Getter
-public class DomainError extends RuntimeException {
+public class Error extends RuntimeException {
 
     private final String responseMessage;
 
-    public DomainError(String message) {
+    public Error(String message) {
         super(message);
         responseMessage = message;
     }

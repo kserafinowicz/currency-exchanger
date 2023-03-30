@@ -1,7 +1,7 @@
 package com.currencyexchanger.command.validators;
 
 import com.currencyexchanger.command.commands.CreateUserAccount;
-import com.currencyexchanger.common.errors.DomainError;
+import com.currencyexchanger.common.errors.Error;
 import io.vavr.collection.Seq;
 import io.vavr.control.Validation;
 import java.math.BigDecimal;
@@ -12,11 +12,11 @@ import org.apache.commons.lang3.StringUtils;
 
 public class CreateUserValidator {
 
-  Predicate<String> NOT_BLANK = StringUtils::isNotBlank;
-  Predicate<BigDecimal> NOT_NEGATIVE = balance -> Objects.nonNull(balance) &&
+  private static final Predicate<String> NOT_BLANK = StringUtils::isNotBlank;
+  private static final Predicate<BigDecimal> NOT_NEGATIVE = balance -> Objects.nonNull(balance) &&
       (balance.setScale(2, RoundingMode.HALF_UP).compareTo(BigDecimal.ZERO) >= 0);
 
-  public Validation<Seq<DomainError>, CreateUserAccount> validate(
+  public Validation<Seq<Error>, CreateUserAccount> validate(
       CreateUserAccount command) {
     return Validation.combine(
         validateName(command.name()),
@@ -25,21 +25,21 @@ public class CreateUserValidator {
     ).ap((name, surname, balance) -> command);
   }
 
-  private Validation<DomainError, String> validateName(String name) {
+  private Validation<Error, String> validateName(String name) {
     return NOT_BLANK.test(name)
         ? Validation.valid(name)
-        : Validation.invalid(new DomainError("Name is blank"));
+        : Validation.invalid(new Error("Name is blank"));
   }
 
-  private Validation<DomainError, String> validateSurname(String surname) {
+  private Validation<Error, String> validateSurname(String surname) {
     return NOT_BLANK.test(surname)
         ? Validation.valid(surname)
-        : Validation.invalid(new DomainError("Surname is blank"));
+        : Validation.invalid(new Error("Surname is blank"));
   }
 
-  private Validation<DomainError, BigDecimal> validateBalance(BigDecimal balance) {
+  private Validation<Error, BigDecimal> validateBalance(BigDecimal balance) {
     return NOT_NEGATIVE.test(balance)
         ? Validation.valid(balance)
-        : Validation.invalid(new DomainError("Balance is null or negative"));
+        : Validation.invalid(new Error("Balance is null or negative"));
   }
 }
