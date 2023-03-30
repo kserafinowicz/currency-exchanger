@@ -1,16 +1,19 @@
 package com.currencyexchanger.command;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.currencyexchanger.command.commands.CreateUserAccount;
 import java.math.BigDecimal;
 import java.util.Currency;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class UserAccountCreationTest {
 
   @Test
-  void shouldCreateUserAccountWhenCommandIsCorrect() {
+  void shouldCreateUserAccountWhenCommandIsValid() {
     // given
     CreateUserAccount command = new CreateUserAccount("John", "Smith", BigDecimal.ONE,
         Currency.getInstance("PLN"));
@@ -19,12 +22,12 @@ class UserAccountCreationTest {
     var result = UserAccount.apply(command);
 
     // then
-    Assertions.assertTrue(result.isRight());
-    Assertions.assertNotNull(result.get().get().accountId());
-    Assertions.assertEquals("John", result.get().get().name());
-    Assertions.assertEquals("Smith", result.get().get().surname());
-    Assertions.assertEquals(1, result.get().get().accounts().values().size());
-    Assertions.assertEquals(BigDecimal.ONE, result.get().get().accounts().get("PLN"));
+    assertTrue(result.isRight());
+    assertNotNull(result.get().get().accountId());
+    assertEquals("John", result.get().get().name());
+    assertEquals("Smith", result.get().get().surname());
+    assertEquals(1, result.get().get().accounts().values().size());
+    assertEquals(BigDecimal.ONE, result.get().get().accounts().get("PLN"));
   }
 
   @Test
@@ -37,7 +40,7 @@ class UserAccountCreationTest {
     var result = UserAccount.apply(command);
 
     // then
-    Assertions.assertTrue(result.isLeft());
+    assertTrue(result.isLeft());
   }
 
   @Test
@@ -50,7 +53,7 @@ class UserAccountCreationTest {
     var result = UserAccount.apply(command);
 
     // then
-    Assertions.assertTrue(result.isLeft());
+    assertTrue(result.isLeft());
   }
 
   @Test
@@ -63,7 +66,7 @@ class UserAccountCreationTest {
     var result = UserAccount.apply(command);
 
     // then
-    Assertions.assertTrue(result.isLeft());
+    assertTrue(result.isLeft());
   }
   @Test
   void shouldReturnErrorWhenBalanceIsNegative() {
@@ -75,6 +78,6 @@ class UserAccountCreationTest {
     var result = UserAccount.apply(command);
 
     // then
-    Assertions.assertTrue(result.isLeft());
+    assertTrue(result.isLeft());
   }
 }
