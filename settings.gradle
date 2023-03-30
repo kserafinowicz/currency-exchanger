@@ -1,3 +1,5 @@
 rootProject.name = 'currency-exchanger'
 include(':query')
 include(':command')
+include 'common'
+

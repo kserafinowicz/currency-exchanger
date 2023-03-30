@@ -8,6 +8,7 @@ java {
 }
 
 dependencies {
+    implementation project(':common')
     implementation 'org.apache.commons:commons-lang3:3.0'
 }
 
