@@ -14,7 +14,11 @@ spring:
 exchanger:
   base:
     currency: 'PLN'
+  currency:
+    update:
+      cron: "0 * * * * *"
+  imported:
+    currencies: 'USD'
   rate:
     api:
-      "single-currency":
-        url: "https://api.nbp.pl/api/exchangerates/rates/c"
+      url: "https://api.nbp.pl/api/exchangerates/rates/c"
