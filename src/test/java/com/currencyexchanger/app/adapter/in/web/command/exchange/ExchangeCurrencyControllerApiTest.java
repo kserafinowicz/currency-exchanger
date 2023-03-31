@@ -1,5 +1,6 @@
 package com.currencyexchanger.app.adapter.in.web.command.exchange;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,9 +36,9 @@ class ExchangeCurrencyControllerApiTest {
 
   @Test
   void shouldCorrectlyAcceptExchange() throws Exception {
-    Mockito.when(findExchangeRatePort.findExchangeRate(Mockito.any())).thenReturn(
+    when(findExchangeRatePort.findExchangeRate(any())).thenReturn(
         Either.right(mockCurrencyExchangeRate()));
-    Mockito.when(performCurrencyExchangeUseCase.performExchange(Mockito.any())).thenReturn(
+    when(performCurrencyExchangeUseCase.performExchange(any())).thenReturn(
         Either.right(new AmountExchanged(null)));
 
     RequestBuilder requestBuilder = post("/api/exchanges")
@@ -56,7 +57,7 @@ class ExchangeCurrencyControllerApiTest {
 
   @Test
   void shouldReturnBadRequestWhenExchangeRateNotFound() throws Exception {
-    Mockito.when(findExchangeRatePort.findExchangeRate(Mockito.any())).thenReturn(
+    when(findExchangeRatePort.findExchangeRate(any())).thenReturn(
         Either.left(new Error("Error")));
 
     RequestBuilder requestBuilder = post("/api/exchanges")
@@ -75,9 +76,9 @@ class ExchangeCurrencyControllerApiTest {
 
   @Test
   void shouldReturnBadRequestWhenExchangeFails() throws Exception {
-    Mockito.when(findExchangeRatePort.findExchangeRate(Mockito.any())).thenReturn(
+    when(findExchangeRatePort.findExchangeRate(any())).thenReturn(
         Either.right(mockCurrencyExchangeRate()));
-    Mockito.when(performCurrencyExchangeUseCase.performExchange(Mockito.any())).thenReturn(
+    when(performCurrencyExchangeUseCase.performExchange(any())).thenReturn(
         Either.left(Array.of(new Error("Error"))));
 
     RequestBuilder requestBuilder = post("/api/exchanges")

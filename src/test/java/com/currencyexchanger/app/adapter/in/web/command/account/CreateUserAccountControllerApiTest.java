@@ -1,5 +1,6 @@
 package com.currencyexchanger.app.adapter.in.web.command.account;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +30,7 @@ class CreateUserAccountControllerApiTest {
 
   @Test
   void shouldAcceptUserCreation() throws Exception {
-    Mockito.when(createUserAccountUseCase.createUserAccount(Mockito.any())).thenReturn(
+    when(createUserAccountUseCase.createUserAccount(any())).thenReturn(
         Either.right(new UserAccountCreated(null)));
 
     RequestBuilder requestBuilder = post("/api/users")
@@ -47,7 +48,7 @@ class CreateUserAccountControllerApiTest {
 
   @Test
   void shouldReturnBadRequestErrorWhenCreationFails() throws Exception {
-    Mockito.when(createUserAccountUseCase.createUserAccount(Mockito.any())).thenReturn(
+    when(createUserAccountUseCase.createUserAccount(any())).thenReturn(
         Either.left(Array.of(new Error("Error"))));
 
     RequestBuilder requestBuilder = post("/api/users")
