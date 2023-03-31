@@ -24,6 +24,10 @@ Celem zadania jest przygotowanie aplikacji serwującej API REST, która pozwoli 
 
 ## Działanie aplikacji
 
+Uruchomienie:
+
+`./gradlew bootRun`
+
 Aplikacja po uruchomieniu ma wystawionego Swaggera:
 
 http://localhost:8080/swagger-ui/index.html
