@@ -21,11 +21,14 @@ Celem zadania jest przygotowanie aplikacji serwującej API REST, która pozwoli 
 - W przypadku niesprecyzowania czegoś w zadaniu - pozostaje dowolność.
 - W przypadku pytań – można się dopytywać mailowo.
 
-## Analiza
 
-### Zdarzenia domenowe
+## Działanie aplikacji
 
-- użytkownik założył konto
-- użytkownik kupił walutę
-- użytkownik sprzedał walutę
-- użytkownik pobrał dane o koncie i aktualny stan w PLN i USD
+Aplikacja po uruchomieniu ma wystawionego Swaggera:
+
+http://localhost:8080/swagger-ui/index.html
+
+Do bazy można się dostać poprzez konsolę H2:
+
+http://localhost:8080/h2-console/login.jsp
+
